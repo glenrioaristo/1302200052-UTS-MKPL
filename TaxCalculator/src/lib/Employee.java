@@ -49,22 +49,26 @@ public class Employee extends Salary{
 	 */
 	
 	public void setMonthlySalary(int grade) {	
-		if (grade == 1) {
-			SalaryData.setMonthlySalary(3000000);
-			if (isForeigner) {
-			 SalaryData.setMonthlySalary((int) (3000000 * 1.5));				
-			}
-		}else if (grade == 2) {
-			SalaryData.setMonthlySalary(5000000);
-			if (isForeigner) {
-				SalaryData.setMonthlySalary((int) (3000000 * 1.5));	
-			}
-		}else if (grade == 3) {
-			SalaryData.setMonthlySalary(7000000);
-			if (isForeigner) {
-				SalaryData.setMonthlySalary((int) (3000000 * 1.5));	
-			}
+		int monthlySalary = 0;
+		switch (grade) {
+			case 1:
+				monthlySalary = 3000000;
+				break;
+			case 2:
+				monthlySalary = 5000000;
+				break;
+			case 3:
+				monthlySalary = 7000000;
+				break;
+			default:
+				System.err.println("Invalid grade");
+				break;
 		}
+		if (isForeigner) {
+			monthlySalary = (int) (monthlySalary * 1.5);
+		}
+	
+		SalaryData.setMonthlySalary(monthlySalary);
 	}
 	
 	public String getEmployeeId() {
