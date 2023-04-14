@@ -118,6 +118,6 @@ public class Employee extends Salary{
 			
 		}
 		
-		return TaxFunction.calculateTax(SalaryData.getMonthlySalary(),SalaryData.getOtherMonthlyIncome(),SalaryData.getMonthWorkingInYear(),SalaryData.getAnnualDeductible(), spouseIdNumber.equals(""), childIdNumbers.size());
+		return TaxFunction.calculateTax(SalaryData, spouseIdNumber.equals(""), childIdNumbers.size());
 	}
 }
