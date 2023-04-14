@@ -8,30 +8,21 @@ import java.util.List;
 import java.text.SimpleDateFormat;
 
 
-public class Employee {
+public class Employee extends Salary{
 
 	private enum Gender {
 		Pria,
 		Wanita
 	}
-
 	private String employeeId;
-	private String firstName;
-	private String lastName;
-	private String idNumber;
-	private String address;
-	
 	private Date dateJoined;
-
-	private int monthWorkingInYear;
-	
 	private boolean isForeigner;
-	private Gender gender; //true = Laki-laki, false = Perempuan
+	private String idNumber;
+	private Gender gender; 
 	
-	private int monthlySalary;
-	private int otherMonthlyIncome;
-	private int annualDeductible;
-	
+	private person personalData;
+	private Salary SalaryData;
+
 	private String spouseName;
 	private String spouseIdNumber;
 
@@ -40,16 +31,19 @@ public class Employee {
 	
 	public Employee(String employeeId, String firstName, String lastName, String idNumber, String address,Date dateJoined, boolean isForeigner, Gender gender) {
 		this.employeeId = employeeId;
-		this.firstName = firstName;
-		this.lastName = lastName;
+		personalData = new person();
+		personalData.setFirstName(firstName);
+		personalData.setLastName(lastName);
+		personalData.setAddress(address);
 		this.idNumber = idNumber;
-		this.address = address;
 		this.dateJoined = dateJoined;
 		this.isForeigner = isForeigner;
 		this.gender = gender;
+
 		
 		childNames = new LinkedList<String>();
 		childIdNumbers = new LinkedList<String>();
+		
 	}
 	
 	/**
@@ -59,30 +53,30 @@ public class Employee {
 	
 	public void setMonthlySalary(int grade) {	
 		if (grade == 1) {
-			monthlySalary = 3000000;
+			SalaryData.setMonthlySalary(3000000);
 			if (isForeigner) {
-				monthlySalary = (int) (3000000 * 1.5);
+			 SalaryData.setMonthlySalary((int) (3000000 * 1.5));				
 			}
 		}else if (grade == 2) {
-			monthlySalary = 5000000;
+			SalaryData.setMonthlySalary(5000000);
 			if (isForeigner) {
-				monthlySalary = (int) (3000000 * 1.5);
+				SalaryData.setMonthlySalary((int) (3000000 * 1.5));	
 			}
 		}else if (grade == 3) {
-			monthlySalary = 7000000;
+			SalaryData.setMonthlySalary(7000000);
 			if (isForeigner) {
-				monthlySalary = (int) (3000000 * 1.5);
+				SalaryData.setMonthlySalary((int) (3000000 * 1.5));	
 			}
 		}
 	}
 	
-	public void setAnnualDeductible(int deductible) {	
-		this.annualDeductible = deductible;
+	public String getEmployeeId() {
+		return employeeId;
 	}
-	
-	public void setAdditionalIncome(int income) {	
-		this.otherMonthlyIncome = income;
+	public String getSpouseName() {
+		return spouseName;
 	}
+
 	
 	public void setSpouse(String spouseName, String spouseIdNumber) {
 		this.spouseName = spouseName;
@@ -101,7 +95,6 @@ public class Employee {
 	public void setDateJoined(Date dateJoined) {
 		this.dateJoined = dateJoined;
 	}
-
 	public Gender getGender() {
 		return gender;
 	}
@@ -109,6 +102,8 @@ public class Employee {
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
+
+	
 	public int getAnnualIncomeTax() {
 		
 		//Menghitung berapa lama pegawai bekerja dalam setahun ini, jika pegawai sudah bekerja dari tahun sebelumnya maka otomatis dianggap 12 bulan.
@@ -120,11 +115,12 @@ public class Employee {
 
 		
 		if (date.getYear() == Integer.parseInt(year) ) {
-			monthWorkingInYear = date.getMonthValue() - Integer.parseInt(month);
+			SalaryData.setMonthWorkingInYear(date.getMonthValue() - Integer.parseInt(month));
 		}else {
-			monthWorkingInYear = 12;
+			SalaryData.setMonthWorkingInYear(12);
+			
 		}
 		
-		return TaxFunction.calculateTax(monthlySalary, otherMonthlyIncome, monthWorkingInYear, annualDeductible, spouseIdNumber.equals(""), childIdNumbers.size());
+		return TaxFunction.calculateTax(SalaryData.getMonthlySalary(),SalaryData.getOtherMonthlyIncome(),SalaryData.getMonthWorkingInYear(),SalaryData.getAnnualDeductible(), spouseIdNumber.equals(""), childIdNumbers.size());
 	}
 }
