@@ -1,11 +1,19 @@
 package lib;
 
+// import java.time.Month; 
 import java.time.LocalDate;
-import java.time.Month;
+import java.util.Date ;
 import java.util.LinkedList;
 import java.util.List;
+import java.text.SimpleDateFormat;
+
 
 public class Employee {
+
+	private enum Gender {
+		Pria,
+		Wanita
+	}
 
 	private String employeeId;
 	private String firstName;
@@ -13,13 +21,12 @@ public class Employee {
 	private String idNumber;
 	private String address;
 	
-	private int yearJoined;
-	private int monthJoined;
-	private int dayJoined;
+	private Date dateJoined;
+
 	private int monthWorkingInYear;
 	
 	private boolean isForeigner;
-	private boolean gender; //true = Laki-laki, false = Perempuan
+	private Gender gender; //true = Laki-laki, false = Perempuan
 	
 	private int monthlySalary;
 	private int otherMonthlyIncome;
@@ -31,15 +38,13 @@ public class Employee {
 	private List<String> childNames;
 	private List<String> childIdNumbers;
 	
-	public Employee(String employeeId, String firstName, String lastName, String idNumber, String address, int yearJoined, int monthJoined, int dayJoined, boolean isForeigner, boolean gender) {
+	public Employee(String employeeId, String firstName, String lastName, String idNumber, String address,Date dateJoined, boolean isForeigner, Gender gender) {
 		this.employeeId = employeeId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.idNumber = idNumber;
 		this.address = address;
-		this.yearJoined = yearJoined;
-		this.monthJoined = monthJoined;
-		this.dayJoined = dayJoined;
+		this.dateJoined = dateJoined;
 		this.isForeigner = isForeigner;
 		this.gender = gender;
 		
@@ -89,13 +94,33 @@ public class Employee {
 		childIdNumbers.add(childIdNumber);
 	}
 	
+	public Date getDateJoined() {
+		return dateJoined;
+	}
+
+	public void setDateJoined(Date dateJoined) {
+		this.dateJoined = dateJoined;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
 	public int getAnnualIncomeTax() {
 		
 		//Menghitung berapa lama pegawai bekerja dalam setahun ini, jika pegawai sudah bekerja dari tahun sebelumnya maka otomatis dianggap 12 bulan.
 		LocalDate date = LocalDate.now();
+		SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
+		String month = monthFormat.format(dateJoined);
+		SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+		String year = yearFormat.format(dateJoined);
+
 		
-		if (date.getYear() == yearJoined) {
-			monthWorkingInYear = date.getMonthValue() - monthJoined;
+		if (date.getYear() == Integer.parseInt(year) ) {
+			monthWorkingInYear = date.getMonthValue() - Integer.parseInt(month);
 		}else {
 			monthWorkingInYear = 12;
 		}
