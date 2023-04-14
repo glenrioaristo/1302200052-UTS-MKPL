@@ -1,10 +1,10 @@
 package lib;
  
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date ;
 import java.util.LinkedList;
 import java.util.List;
-import java.text.SimpleDateFormat;
 
 
 public class Employee extends Salary{
@@ -108,19 +108,17 @@ public class Employee extends Salary{
 	public int getAnnualIncomeTax() {
 		
 		//Menghitung berapa lama pegawai bekerja dalam setahun ini, jika pegawai sudah bekerja dari tahun sebelumnya maka otomatis dianggap 12 bulan.
-		LocalDate date = LocalDate.now();
-		SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
-		String month = monthFormat.format(dateJoined);
-		SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
-		String year = yearFormat.format(dateJoined);
+		LocalDate joinDate = dateJoined.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		int monthsWorked;
 
-		
-		if (date.getYear() == Integer.parseInt(year) ) {
-			SalaryData.setMonthWorkingInYear(date.getMonthValue() - Integer.parseInt(month));
-		}else {
-			SalaryData.setMonthWorkingInYear(12);
-			
+		if (LocalDate.now().getYear() == joinDate.getYear()) {
+			monthsWorked = LocalDate.now().getMonthValue() - joinDate.getMonthValue();
+		} else {
+			monthsWorked = 12;
 		}
+
+		SalaryData.setMonthWorkingInYear(monthsWorked);
+
 		
 		return TaxFunction.calculateTax(SalaryData, spouseIdNumber.equals(""), childIdNumbers.size());
 	}
