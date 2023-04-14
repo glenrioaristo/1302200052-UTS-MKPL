@@ -1,6 +1,6 @@
 package lib;
 
-public class person {
+public class Person {
 
     private String idNumber;
     private String firstName;

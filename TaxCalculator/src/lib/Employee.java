@@ -10,33 +10,30 @@ import java.util.List;
 public class Employee extends Salary{
 
 	private enum Gender {
-		Pria,
-		Wanita
+		PRIA,
+		WANITA
 	}
 	private String employeeId;
 	private Date dateJoined;
 	private boolean isForeigner;
 	private Gender gender; 
 	
-	private person personalData;
+	private Person personalData;
 	private Salary SalaryData;
 
 	private String spouseName;
 	private String spouseIdNumber;
 
-	private List<String> childNames;
-	private List<String> childIdNumbers;
+	private List<String> childNames = new LinkedList<String>();
+	private List<String> childIdNumbers = new LinkedList<String>();
 	
-	public Employee(String employeeId, person personalData,Date dateJoined, boolean isForeigner, Gender gender) {
+	public Employee(String employeeId, Person personalData,Date dateJoined, boolean isForeigner, Gender gender) {
 		this.employeeId = employeeId;
 		this.personalData = personalData;
 		this.dateJoined = dateJoined;
 		this.isForeigner = isForeigner;
 		this.gender = gender;
 
-		
-		childNames = new LinkedList<String>();
-		childIdNumbers = new LinkedList<String>();
 		setSpouse(personalData.getFirstName(), employeeId);
 		addChild(personalData.getFirstName(), employeeId);
 		
