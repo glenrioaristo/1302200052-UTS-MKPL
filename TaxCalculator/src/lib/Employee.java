@@ -1,6 +1,5 @@
 package lib;
-
-// import java.time.Month; 
+ 
 import java.time.LocalDate;
 import java.util.Date ;
 import java.util.LinkedList;
@@ -17,7 +16,6 @@ public class Employee extends Salary{
 	private String employeeId;
 	private Date dateJoined;
 	private boolean isForeigner;
-	private String idNumber;
 	private Gender gender; 
 	
 	private person personalData;
@@ -29,13 +27,9 @@ public class Employee extends Salary{
 	private List<String> childNames;
 	private List<String> childIdNumbers;
 	
-	public Employee(String employeeId, String firstName, String lastName, String idNumber, String address,Date dateJoined, boolean isForeigner, Gender gender) {
+	public Employee(String employeeId, person personalData,Date dateJoined, boolean isForeigner, Gender gender) {
 		this.employeeId = employeeId;
-		personalData = new person();
-		personalData.setFirstName(firstName);
-		personalData.setLastName(lastName);
-		personalData.setAddress(address);
-		this.idNumber = idNumber;
+		this.personalData = personalData;
 		this.dateJoined = dateJoined;
 		this.isForeigner = isForeigner;
 		this.gender = gender;
@@ -43,7 +37,10 @@ public class Employee extends Salary{
 		
 		childNames = new LinkedList<String>();
 		childIdNumbers = new LinkedList<String>();
+		setSpouse(personalData.getFirstName(), employeeId);
+		addChild(personalData.getFirstName(), employeeId);
 		
+
 	}
 	
 	/**
@@ -80,7 +77,7 @@ public class Employee extends Salary{
 	
 	public void setSpouse(String spouseName, String spouseIdNumber) {
 		this.spouseName = spouseName;
-		this.spouseIdNumber = idNumber;
+		this.spouseIdNumber = personalData.getIdNumber();
 	}
 	
 	public void addChild(String childName, String childIdNumber) {
