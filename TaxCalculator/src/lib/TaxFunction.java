@@ -27,18 +27,21 @@ public class TaxFunction {
 		if (numberOfChildren > 3) {
 			numberOfChildren = 3;
 		}
-		
+
+		int monthlyIncome = salaryData.getMonthlySalary() + salaryData.getOtherMonthlyIncome();
+		int workingMonths = salaryData.getMonthWorkingInYear();
+		int annualDeductible = salaryData.getAnnualDeductible();
+		int taxableIncome;
+	
 		if (isMarried) {
-			tax = (int) Math.round(0.05 * (((salaryData.getMonthlySalary() + salaryData.getOtherMonthlyIncome()) * salaryData.getMonthWorkingInYear()) - salaryData.getAnnualDeductible() - (54000000 + 4500000 + (numberOfChildren * 1500000))));
-		}else {
-			tax = (int) Math.round(0.05 * (((salaryData.getMonthlySalary() + salaryData.getOtherMonthlyIncome()) * salaryData.getMonthWorkingInYear()) - salaryData.getAnnualDeductible() - 54000000));
+			taxableIncome = monthlyIncome * workingMonths - annualDeductible - (54000000 + 4500000 +  (numberOfChildren * 1500000));
+		} else {
+			taxableIncome = monthlyIncome * workingMonths - annualDeductible - 54000000;
 		}
-		
-		if (tax < 0) {
-			return 0;
-		}else {
-			return tax;
-		}
+	
+		tax = (int) Math.round(0.05 * taxableIncome);
+	
+		return Math.max(tax, 0);
 			 
 	}
 }
