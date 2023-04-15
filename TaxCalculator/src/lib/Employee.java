@@ -40,29 +40,31 @@ public class Employee extends Salary{
 
 	}
 	
-	/**
-	 * Fungsi untuk menentukan gaji bulanan pegawai berdasarkan grade kepegawaiannya (grade 1: 3.000.000 per bulan, grade 2: 5.000.000 per bulan, grade 3: 7.000.000 per bulan)
-	 * Jika pegawai adalah warga negara asing gaji bulanan diperbesar sebanyak 50%
-	 */
 	
+	private final int juniorEmployee = 3000000;
+	private final int seniorEmployee = 3000000;
+	private final int managerEmployee = 3000000;
+	private final float foreignEmployee = (float) 1.5;
+
+
 	public void setMonthlySalary(int grade) {	
 		int monthlySalary = 0;
 		switch (grade) {
 			case 1:
-				monthlySalary = 3000000;
+				monthlySalary = juniorEmployee;
 				break;
 			case 2:
-				monthlySalary = 5000000;
+				monthlySalary = seniorEmployee;
 				break;
 			case 3:
-				monthlySalary = 7000000;
+				monthlySalary = managerEmployee;
 				break;
 			default:
 				System.err.println("Invalid grade");
 				break;
 		}
 		if (isForeigner) {
-			monthlySalary = (int) (monthlySalary * 1.5);
+			monthlySalary = (int) (monthlySalary * foreignEmployee);
 		}
 	
 		SalaryData.setMonthlySalary(monthlySalary);
