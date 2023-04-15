@@ -106,15 +106,13 @@ public class Employee extends Salary{
 	
 	public int getAnnualIncomeTax() {
 		
-		//Menghitung berapa lama pegawai bekerja dalam setahun ini, jika pegawai sudah bekerja dari tahun sebelumnya maka otomatis dianggap 12 bulan.
 		LocalDate joinDate = dateJoined.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		int monthsWorked;
-
+		int lengthofWork =  joinDate.getMonthValue();
+		int monthsWorked = 12;
+		 
 		if (LocalDate.now().getYear() == joinDate.getYear()) {
-			monthsWorked = LocalDate.now().getMonthValue() - joinDate.getMonthValue();
-		} else {
-			monthsWorked = 12;
-		}
+			monthsWorked = LocalDate.now().getMonthValue() - lengthofWork;
+		} 
 
 		SalaryData.setMonthWorkingInYear(monthsWorked);
 
